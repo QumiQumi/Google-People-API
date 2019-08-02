@@ -26,3 +26,6 @@ E:\Работа\NIPI\Google_Contacts\GoogleContacts\WinFormsContacts\obj\Debug\W
 E:\Работа\NIPI\Google_Contacts\GoogleContacts\WinFormsContacts\bin\Debug\Google.Apis.PeopleService.v1.dll
 E:\Работа\NIPI\Google_Contacts\GoogleContacts\WinFormsContacts\bin\Debug\Google.Apis.PeopleService.v1.pdb
 E:\Работа\NIPI\Google_Contacts\GoogleContacts\WinFormsContacts\bin\Debug\Google.Apis.PeopleService.v1.xml
+E:\Работа\NIPI\Google_Contacts\Google-People-API\GoogleContacts\WinFormsContacts\bin\Debug\WinFormsContacts.exe.config
+E:\Работа\NIPI\Google_Contacts\Google-People-API\GoogleContacts\WinFormsContacts\obj\Debug\WinFormsContacts.exe
+E:\Работа\NIPI\Google_Contacts\Google-People-API\GoogleContacts\WinFormsContacts\obj\Debug\WinFormsContacts.pdb

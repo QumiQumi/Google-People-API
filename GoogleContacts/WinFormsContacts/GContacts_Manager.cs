@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Util.Store;
 using Google.Contacts;
 using Google.GData.Client;
-using System.Text;
 using System.Configuration;
 using System.IO;
 using Google.Apis.PeopleService.v1;
 using Google.Apis.Services;
 using Google.Apis.PeopleService.v1.Data;
 using System.Net.NetworkInformation;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Responses;
+using Newtonsoft.Json;
 
 namespace WinFormsContacts
 {
@@ -26,6 +27,9 @@ namespace WinFormsContacts
         private static PeopleServiceService service;
         public Feed<Contact> feed;
         string credPath;
+        string json;
+        string access_token;
+        string refresh_token;
         string[] scopes = new string[] { "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/contacts.readonly" };
 
         public bool Auth(string clientId, string clientSecret, string user = "user")
@@ -41,11 +45,14 @@ namespace WinFormsContacts
 
                 PingReply pr = p.Send(@"google.com");
                 status = pr.Status;
+
+                //Не работает асинхронно, если не авторизоваться, то приложение повиснет
                 UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(new ClientSecrets { ClientId = clientId, ClientSecret = clientSecret }
                                                                                              , scopes
                                                                                              , user
                                                                                              , CancellationToken.None
                                                                                              , new FileDataStore(credPath)).Result;
+
                 Console.WriteLine("Credential file saved to: " + credPath);
 
                 // Create People API service.
@@ -66,20 +73,15 @@ namespace WinFormsContacts
                 MessageBox.Show("Проблемы с интернетом");
                 return false;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
         }
         //For people API
-        public List<Person> GetPeople(string pageToken=null, string user="user")
+        public List<Person> GetPeople(string pageToken = null, string user = "user")
         {
             // Define parameters of request.
             PeopleResource.ConnectionsResource.ListRequest peopleRequest =
                     service.People.Connections.List("people/me");
             peopleRequest.PersonFields = "names,emailAddresses,photos,phoneNumbers,birthdays,interests,organizations";
-            ListConnectionsResponse people=null;
+            ListConnectionsResponse people = null;
             if (pageToken != null)
             {
                 peopleRequest.PageToken = pageToken;
@@ -89,10 +91,10 @@ namespace WinFormsContacts
             {
                 people = peopleRequest.Execute();
             }
-            catch(Google.GoogleApiException)
+            catch (Google.GoogleApiException)
             {
-                File.Delete(Path.Combine(credPath, "Google.Apis.Auth.OAuth2.Responses.TokenResponse-"+user));
-                MessageBox.Show("Необходимо дать согласие на обработку ваших данных, попробуйте еще раз.");    
+                File.Delete(Path.Combine(credPath, "Google.Apis.Auth.OAuth2.Responses.TokenResponse-" + user));
+                MessageBox.Show("Необходимо дать согласие на обработку ваших данных, попробуйте еще раз.");
                 return null;
             }
 
@@ -132,9 +134,9 @@ namespace WinFormsContacts
                 MessageBox.Show("Проблемы с интернетом");
                 return null;
             }
-            if (profile != null )
+            if (profile != null)
             {
-                    Console.WriteLine(profile.Names != null ? (profile.Names[0].DisplayName ?? "n/a") : "n/a");
+                Console.WriteLine(profile.Names != null ? (profile.Names[0].DisplayName ?? "n/a") : "n/a");
                 return profile;
             }
             else
@@ -162,7 +164,5 @@ namespace WinFormsContacts
                 return false;
             }
         }
-
-
     }
 }

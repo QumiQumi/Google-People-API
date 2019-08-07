@@ -237,11 +237,11 @@
         <member name="M:Google.Apis.PeopleService.v1.ContactGroupsResource.BatchGetRequest.#ctor(Google.Apis.Services.IClientService)">
             <summary>Constructs a new BatchGet request.</summary>
         </member>
-        <member name="P:Google.Apis.PeopleService.v1.ContactGroupsResource.BatchGetRequest.ResourceNames">
-            <summary>The resource names of the contact groups to get.</summary>
-        </member>
         <member name="P:Google.Apis.PeopleService.v1.ContactGroupsResource.BatchGetRequest.MaxMembers">
             <summary>Specifies the maximum number of members to return for each group.</summary>
+        </member>
+        <member name="P:Google.Apis.PeopleService.v1.ContactGroupsResource.BatchGetRequest.ResourceNames">
+            <summary>The resource names of the contact groups to get.</summary>
         </member>
         <member name="P:Google.Apis.PeopleService.v1.ContactGroupsResource.BatchGetRequest.MethodName">
             <summary>Gets the method name.</summary>
@@ -450,6 +450,22 @@
         <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.ResourceName">
             <summary>The resource name to return connections for. Only `people/me` is valid.</summary>
         </member>
+        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.PageToken">
+            <summary>The token of the page to be returned.</summary>
+        </member>
+        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.PageSize">
+            <summary>The number of connections to include in the response. Valid values are between 1 and 2000,
+            inclusive. Defaults to 100.</summary>
+        </member>
+        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.RequestMaskIncludeField">
+            <summary>**Required.** Comma-separated list of person fields to be included in the response. Each
+            path should start with `person.`: for example, `person.names` or `person.photos`.</summary>
+        </member>
+        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.SyncToken">
+            <summary>A sync token returned by a previous call to `people.connections.list`. Only resources
+            changed since the sync token was created will be returned. Sync requests that specify `sync_token`
+            have an additional rate limit.</summary>
+        </member>
         <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.PersonFields">
              <summary>**Required.** A field mask to restrict which fields on each person are returned. Multiple
              fields can be specified by separating them with commas. Valid values are:
@@ -471,22 +487,6 @@
             <summary>Whether the response should include a sync token, which can be used to get all changes
             since the last request. For subsequent sync requests use the `sync_token` param instead. Initial
             sync requests that specify `request_sync_token` have an additional rate limit.</summary>
-        </member>
-        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.PageToken">
-            <summary>The token of the page to be returned.</summary>
-        </member>
-        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.PageSize">
-            <summary>The number of connections to include in the response. Valid values are between 1 and 2000,
-            inclusive. Defaults to 100.</summary>
-        </member>
-        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.RequestMaskIncludeField">
-            <summary>**Required.** Comma-separated list of person fields to be included in the response. Each
-            path should start with `person.`: for example, `person.names` or `person.photos`.</summary>
-        </member>
-        <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.SyncToken">
-            <summary>A sync token returned by a previous call to `people.connections.list`. Only resources
-            changed since the sync token was created will be returned. Sync requests that specify `sync_token`
-            have an additional rate limit.</summary>
         </member>
         <member name="P:Google.Apis.PeopleService.v1.PeopleResource.ConnectionsResource.ListRequest.MethodName">
             <summary>Gets the method name.</summary>
@@ -1257,6 +1257,9 @@
         </member>
         <member name="T:Google.Apis.PeopleService.v1.Data.ModifyContactGroupMembersResponse">
             <summary>The response to a modify contact group members request.</summary>
+        </member>
+        <member name="P:Google.Apis.PeopleService.v1.Data.ModifyContactGroupMembersResponse.CanNotRemoveLastContactGroupResourceNames">
+            <summary>The contact people resource names that cannot be removed from their last contact group.</summary>
         </member>
         <member name="P:Google.Apis.PeopleService.v1.Data.ModifyContactGroupMembersResponse.NotFoundResourceNames">
             <summary>The contact people resource names that were not found.</summary>
